@@ -1,0 +1,17 @@
+- name: Copy
+  hosts: docker
+  
+  tasks:
+  
+    - name: copying file with playbook
+      become: true 
+      
+      copy:
+        src: /var/lib/jenkins/workspace/docker.git/*
+        dest: /usr/local/lsws/devopsgurukulam.com/html/wordpress
+        
+        owner: root
+        group: root        
+        
+        chdir: /usr/local/lsws/devopsgurukulam.com/html/wordpress
+        command: docker compose up -d  
