@@ -4,7 +4,8 @@ services:
   # Services line define which Docker images to run. In this case, it will be MySQL server and WordPress image.
   db:
     image: mysql:5.7
-    # image: mysql:5.7 indicates the MySQL database container image from Docker Hub used in this installation.
+    volumes:
+      - db_data:/var/lib/mysql
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: admin
@@ -16,6 +17,8 @@ services:
     depends_on:
       - db
     image: wordpress:latest
+    volumes:
+      - wp:/var/www/html      
     restart: always
     # Restart line controls the restart mode, meaning if the container stops running for any reason, it will restart the process immediately.
     ports:
@@ -27,7 +30,6 @@ services:
       WORDPRESS_DB_PASSWORD: ryan@555
       WORDPRESS_DB_NAME: devops_wp
 # Similar to MySQL image variables, the last four lines define the main variables needed for the WordPress container to work properly with the MySQL container.
-    volumes:
-      ["./:/var/www/html"]
 volumes:
-  mysql: {}
+  db_data:      
+  wp:
